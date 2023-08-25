@@ -7,7 +7,7 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-A demo CRUP API using Laravel and Lighthouse GraphQL Library
+A demo CRUP API using Laravel and Lighthouse GraphQL Library featuring pagination and soft deletes
 
 ## About Laravel
 
