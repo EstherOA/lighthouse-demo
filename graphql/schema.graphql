@@ -1,0 +1,83 @@
+type Query {
+    greetings: String!
+    users: [User]! @paginate @softDeletes
+    user(id: ID! @eq): User @find
+    bills: [Bill]! @all
+    bill(id: ID! @eq): Bill @find
+    shipment(id: ID! @eq): Shipment @find
+    shipments: [Shipment]! @all @softDeletes
+}
+
+type Mutation {
+    createUser(name: String!, email: String!, password: String!): User! @create
+    createBill(
+        service: String!
+        status: String!
+        vendor_name: String!
+        shipment_id: ID!
+    ): Bill! @create
+    createShipment(
+        origin_port: String!
+        destination_port: String!
+        commodity: String!
+        package_type: String!
+        consignee: String
+        shipper: String!
+        owner_id: ID!
+    ): Shipment! @create
+    updateUser(id: ID!, name: String, email: String, password: String): User!
+        @update
+    updateBill(
+        id: ID!
+        service: String
+        status: String
+        vendor_name: String
+        shipment_id: ID
+    ): Bill! @update
+    updateShipment(
+        id: ID!
+        origin_port: String
+        destination_port: String
+        commodity: String
+        package_type: String
+        consignee: String
+        shipper: String
+        owner_id: ID
+    ): Shipment! @update
+    deleteUser(id: ID! @whereKey): User! @delete
+    deleteBill(id: ID! @whereKey): Bill! @delete
+    deleteShipment(id: ID! @whereKey): Shipment! @delete
+}
+
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    password: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+    shipments: [Shipment]! @hasMany
+}
+
+type Shipment {
+    id: ID!
+    origin_port: String!
+    destination_port: String!
+    commodity: String!
+    package_type: String!
+    consignee: String
+    shipper: String!
+    owner: User! @belongsTo
+    bills: [Bill]! @hasMany
+}
+
+type Bill {
+    id: ID!
+    service: String!
+    status: String!
+    vendor_name: String!
+    shipment: Shipment! @belongsTo
+}
+
+scalar DateTime
+    @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")

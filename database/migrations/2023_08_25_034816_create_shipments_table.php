@@ -17,10 +17,11 @@ return new class extends Migration
             $table->string('destination_port');
             $table->string('commodity');
             $table->string('package_type');
-            $table->string('consignee');
+            $table->string('consignee')->nullable();;
             $table->string('shipper');
             $table->unsignedBigInteger('owner_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
